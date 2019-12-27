@@ -4,6 +4,14 @@ See the Terraform docs for the AzureRM App Service:
 
 https://www.terraform.io/docs/providers/azurerm/r/app_service.html
 
+We highly recommend using Azure AKS if desire any kind of flexibility, scale or the ability to host more then one application onto a centralized platform.
+
+* [Terraform Kubernetes AKS](https://github.com/canada-ca-terraform-modules/terraform-kubernetes-aks)
+* [Terraform Kubernetes AKS Platform](https://github.com/canada-ca-terraform-modules/terraform-kubernetes-aks-platform)
+* [Terraform Kubernetes for DrupalWxT](https://github.com/drupalwxt/terraform-kubernetes-drupalwxt)
+
+> Note: Terraform Kubernetes for DrupalWxT merely installs the [Drupal WxT Helm Chart][https://github.com/drupalwxt/helm-drupal].
+
 ## Security Controls
 
 The following security controls can be met through configuration of this template:
