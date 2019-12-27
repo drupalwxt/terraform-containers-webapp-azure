@@ -1,0 +1,53 @@
+# Docker Compose (v2)
+
+version: "2"
+services:
+
+  web:
+    image: drupalwxt/site-wxt:3.0.2
+    environment:
+      - DRUPAL_SETTINGS=production
+      - http_proxy=${HTTP_PROXY}
+      - https_proxy=${HTTP_PROXY}
+      - HTTP_PROXY=${HTTP_PROXY}
+      - HTTPS_PROXY=${HTTP_PROXY}
+    volumes:
+      - drupal_settings:/var/www/html/sites/default
+      - files_public:/var/www/html/sites/default/files
+      - files_private:/var/www/files_private
+    depends_on:
+      - db
+    ports:
+      - "9000:9000"
+    restart: always
+    container_name: sitewxt_web
+
+  db:
+    image: mysql:5.7.28
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=wxt
+      - MYSQL_USER=wxt
+      - MYSQL_PASSWORD=wxt
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    container_name: sitewxt_db
+    command: mysqld --max_allowed_packet=256M --innodb_buffer_pool_size=4096M --innodb_buffer_pool_instances=4 --table_definition_cache=4096 --table_open_cache=8192
+
+  nginx:
+    image: drupalwxt/site-wxt:3.0.2-nginx
+    volumes:
+      - config_nginx:/etc/nginx
+      - files_public:/var/www/html/sites/default/files
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    restart: always
+    container_name: sitewxt_nginx
+
+volumes:
+  db_data:
