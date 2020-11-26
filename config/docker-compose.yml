@@ -4,7 +4,7 @@ version: "2"
 services:
 
   web:
-    image: drupalwxt/site-wxt:4.0.0-rc2-rc1
+    image: drupalwxt/site-wxt:4.0.0-rc2
     environment:
       - DRUPAL_SETTINGS=production
       - http_proxy=${HTTP_PROXY}
@@ -38,7 +38,7 @@ services:
     command: mysqld --max_allowed_packet=256M --innodb_buffer_pool_size=4096M --innodb_buffer_pool_instances=4 --table_definition_cache=4096 --table_open_cache=8192
 
   nginx:
-    image: drupalwxt/site-wxt:4.0.0-rc2-rc1-nginx
+    image: drupalwxt/site-wxt:4.0.0-rc2-nginx
     volumes:
       - config_nginx:/etc/nginx
       - files_public:/var/www/html/sites/default/files
