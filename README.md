@@ -100,8 +100,8 @@ https://docs.microsoft.com/en-us/azure/app-service/containers/configure-custom-c
 
 | Date     | Release    | Change                                                     |
 | -------- | ---------- | ---------------------------------------------------------- |
-| 20190729 | 20190729.1 | Improvements to documentation and formatting               |
 | 20190909 | 20190909.1 | 1st release                                                |
+| 20191220 | 20191220.1 | Updates to Docker Compose and configuration files          |
 
 ## Maintainers/Sponsors
 

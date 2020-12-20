@@ -6,11 +6,12 @@ services:
   web:
     image: drupalwxt/site-wxt:4.0.0-rc3
     environment:
-      - DRUPAL_SETTINGS=production
       - http_proxy=${HTTP_PROXY}
       - https_proxy=${HTTP_PROXY}
       - HTTP_PROXY=${HTTP_PROXY}
       - HTTPS_PROXY=${HTTP_PROXY}
+      - NO_PROXY=${NO_PROXY}
+      - no_proxy=${NO_PROXY}
     volumes:
       - drupal_settings:/var/www/html/sites/default
       - files_public:/var/www/html/sites/default/files
@@ -22,20 +23,39 @@ services:
     restart: always
     container_name: sitewxt_web
 
-  db:
-    image: mysql:5.7.28
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=wxt
-      - MYSQL_USER=wxt
-      - MYSQL_PASSWORD=wxt
-    volumes:
-      - db_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: always
-    container_name: sitewxt_db
-    command: mysqld --max_allowed_packet=256M --innodb_buffer_pool_size=4096M --innodb_buffer_pool_instances=4 --table_definition_cache=4096 --table_open_cache=8192
+  # MySQL Containerized DB
+  # In general recommend the Azure Managed DB for MySQL:
+  # https://github.com/canada-ca-terraform-modules/terraform-azurerm-mysql
+  # db:
+  #   image: mysql:5.7
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_DATABASE=wxt
+  #     - MYSQL_USER=wxt
+  #     - MYSQL_PASSWORD=wxt
+  #   volumes:
+  #     - db_data:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+  #   restart: always
+  #   container_name: sitewxt_db
+  #   command: mysqld --max_allowed_packet=256M --innodb_buffer_pool_size=4096M --innodb_buffer_pool_instances=4 --table_definition_cache=4096 --table_open_cache=8192
+
+  # PostgreSQL Containerized DB
+  # In general recommend the Azure Managed DB for PostgreSQL:
+  # https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql
+  # db:
+  #   image: postgres:11-alpine
+  #   environment:
+  #     - POSTGRES_DB=wxt
+  #     - POSTGRES_USER=root
+  #     - POSTGRES_PASSWORD=root
+  #   volumes:
+  #     - db_data:/var/lib/postgresql
+  #   ports:
+  #     - "5432:5432"
+  #   container_name: ${DOCKER_NAME}_db
+  #   command: ["-c", "shared_buffers=512MB", "-c", "max_connections=200", "-c", "work_mem=2048MB", "-c", "effective_cache_size=512MB", "-c", "maintenance_work_mem=32MB", "-c", "min_wal_size=512MB", "-c", "max_wal_size=512MB", "-c", "wal_buffers=8048kB"]
 
   nginx:
     image: drupalwxt/site-wxt:4.0.0-rc3-nginx
