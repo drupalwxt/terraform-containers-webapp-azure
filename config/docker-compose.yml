@@ -4,7 +4,7 @@ version: "2"
 services:
 
   web:
-    image: drupalwxt/site-wxt:4.0.2
+    image: drupalwxt/site-wxt:4.0.3
     environment:
       - http_proxy=${HTTP_PROXY}
       - https_proxy=${HTTP_PROXY}
@@ -58,7 +58,7 @@ services:
   #   command: ["-c", "shared_buffers=512MB", "-c", "max_connections=200", "-c", "work_mem=2048MB", "-c", "effective_cache_size=512MB", "-c", "maintenance_work_mem=32MB", "-c", "min_wal_size=512MB", "-c", "max_wal_size=512MB", "-c", "wal_buffers=8048kB"]
 
   nginx:
-    image: drupalwxt/site-wxt:4.0.2-nginx
+    image: drupalwxt/site-wxt:4.0.3-nginx
     volumes:
       - config_nginx:/etc/nginx
       - files_public:/var/www/html/sites/default/files
